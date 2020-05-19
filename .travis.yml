@@ -11,9 +11,7 @@ install:
   - pip install caos~=2.0
 
 script:
-  - python -m venv venv
-  - ln -s $(which pip) venv/bin/pip
-  - caos init
+  - caos init && ln -s $(which pip) venv/bin/pip
   - caos update
   - caos run tests
   - caos run build
