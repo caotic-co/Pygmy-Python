@@ -21,6 +21,7 @@ deploy:
   api_key: $GITHUB_OAUTH_TOKEN
   file: "dist/**/*"
   skip_cleanup: true
+  overwrite: true
   on:
     branch: master
     tags: true
