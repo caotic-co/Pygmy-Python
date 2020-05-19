@@ -15,11 +15,14 @@ script:
   - caos update
   - caos run tests
   - caos run build
+  - echo "$(pwd)"
+  - echo "$TRAVIS_BUILD_DIR"
+  - echo "$(ls -l)"
 
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: "dist/**"
+  file: "dist/**/*"
   skip_cleanup: true
   overwrite: true
   on:
