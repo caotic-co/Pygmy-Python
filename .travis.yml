@@ -1,11 +1,13 @@
-language: python
+dist: bionic
+language: minimal
 python: 3.8
 
 install:
-  - pip install caos~=2.0
+  - pip3.8 install caos~=2.0
 
 script:
-  - (mv ~/.pydistutils.cfg ~/oldpydistutils.cfg) || exit 0
+  - python3.8 -c "print('3.8')"
+  - python3 -c "print('3')"
   - caos init
   - caos update
   - caos run tests
