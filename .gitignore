@@ -9,3 +9,6 @@ venv
 
 ### Generated Binaries ###
 dist
+
+### Python ###
+*/__pycache__
