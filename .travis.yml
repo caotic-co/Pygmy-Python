@@ -6,8 +6,10 @@ addons:
     packages:
       - chrpath
 
+
 install:
   - pip install caos~=2.0
+
 
 script:
   - caos init
@@ -15,16 +17,22 @@ script:
   - caos update
   - caos run tests
   - caos run build
-  - echo "$(pwd)"
-  - echo "$TRAVIS_BUILD_DIR"
-  - echo "$(ls -l)"
+  - cd dist && zip -r pygmypython.zip pygmypython
+
+
+before_deploy:
+  - git config --local user.name "Travis CI"
+  - git config --local user.email "builds@travis-ci.com"
+  - export RELEASE_TAG=$(python3 -c 'from pygmypython_core import __version__; print("v{}".format(__version__))')
+  - git tag RELEASE_TAG
 
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: "dist/**/*"
+  file: "dist/pygmypython.zip"
   skip_cleanup: true
   overwrite: true
   on:
     branch: master
+    draft: true
 
