@@ -1,13 +1,11 @@
-dist: bionic
-language: minimal
+language: python
 python: 3.8
 
 install:
-  - pip3.8 install caos~=2.0
+  - pip install caos~=2.0
 
 script:
-  - python3.8 -c "print('3.8')"
-  - python3 -c "print('3')"
+  - python -m venv venv --system-site-packages
   - caos init
   - caos update
   - caos run tests
