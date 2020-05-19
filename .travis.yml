@@ -23,8 +23,9 @@ script:
 
 before_deploy:
   - git config --global --add user.name $GITHUB_USER_NAME
-  - git config --global --add user.password $GITHUB_OAUTH_TOKEN
-  - export GIT_TAG=$(python -c 'from pygmypython_core import __version__; print("v{}".format(__version__))')
+  - git config --global --add user.password $GITHUB_USER_PASSWORD
+  - echo $(pwd)
+  - export GIT_TAG="v$(python -c 'from pygmypython_core import __version__; print(__version__)')"
   - (git push --delete origin $GIT_TAG && echo "TravisCi-INFO-Tag '$GIT_TAG' will be overwritten") || echo "TravisCi-INFO-New Tag '$GIT_TAG' will be created"
   - git tag $GIT_TAG
   - git push origin --tags
