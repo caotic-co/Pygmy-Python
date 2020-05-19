@@ -25,6 +25,7 @@ before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - export GIT_TAG="v$(python -c 'from pygmypython_core import __version__; print(__version__)')" && echo "Tag '$GIT_TAG'"
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - (git push --delete https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git $GIT_TAG) || echo "Pushing new Tag"
   - git push -q https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git --tags
 
 deploy:
@@ -32,6 +33,7 @@ deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
   file: "pygmypython/**/*"
+  overwrite: true
   on:
     branch: master
     tags: false
