@@ -1,9 +1,8 @@
-dist: bionic
 language: python
 python: 3.8
 
 install:
-  - pip install caos~=2.0
+  - ~/virtualenv/python3.8/bin/pip install caos~=2.0
 
 script:
   - caos init
