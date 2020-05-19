@@ -18,23 +18,20 @@ script:
   - caos update
   - caos run tests
   - caos run build
-  - cd dist && zip -r pygmypython.zip pygmypython
 
 
 before_deploy:
-  - git config --global --add user.name $GITHUB_USER_NAME
-  - git config --global --add user.password $GITHUB_USER_PASSWORD
-  - echo $(pwd)
-  - export GIT_TAG="v$(python -c 'from pygmypython_core import __version__; print(__version__)')"
-  - (git push --delete origin $GIT_TAG && echo "TravisCi-INFO-Tag '$GIT_TAG' will be overwritten") || echo "TravisCi-INFO-New Tag '$GIT_TAG' will be created"
-  - git tag $GIT_TAG
-  - git push origin --tags
+  - git config --global user.name "Travis CI"
+  - git config --global user.email "builds@travis-ci.com"
+  - cd .. && export GIT_TAG="v$(python -c 'from pygmypython_core import __version__; print(__version__)')"
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - git push -q https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git --tags
 
 deploy:
   skip_cleanup: true
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: "dist/pygmypython.zip"
+  file: "pygmypython/**/*"
   on:
     branch: master
     tags: false
