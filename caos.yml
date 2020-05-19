@@ -10,7 +10,8 @@ tasks:
     - "(caos python -m nuitka --standalone --follow-imports pygmypython.py) ||
       (echo 'PygmyPython:ERROR: There was a problem when creating the Linux binaries'; exit 1)"
     - "((test -d pygmypython.build) && (rm -Rf pygmypython.build)) || exit 0"
-    - "mv ./pygmypython.dist ./dist/pygmypython"
+    - "mkdir dist"
+    - "mv pygmypython.dist dist/pygmypython"
     - "echo 'PygmyPython:SUCCESS: Binary created'"
 
   tests:
