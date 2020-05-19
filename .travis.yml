@@ -4,7 +4,7 @@ python: 3.8
 install:
   - pip install -U pip
   - pip install -U virtualenv
-  - pip install -u wheel
+  - pip install -U wheel
   - pip install caos~=2.0
 
 script:
