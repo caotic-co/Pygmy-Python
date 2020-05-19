@@ -4,7 +4,7 @@ dependencies:
   nuitka: "~0.6.8"
 
 tasks:
-  "build:linux":
+  build:
     - "echo 'PygmyPython:INFO: Creating Linux binary...'"
     - "((test -d dist) && (rm -Rf dist)) || exit 0"
     - "(caos python -m nuitka --standalone --follow-imports pygmypython.py) ||
@@ -12,9 +12,6 @@ tasks:
     - "((test -d pygmypython.build) && (rm -Rf pygmypython.build)) || exit 0"
     - "mv ./pygmypython.dist ./dist"
     - "echo 'PygmyPython:SUCCESS: Binary created'"
-
-  build:
-    - "build:linux"
 
   tests:
     - caos python -m unittest discover -v tests

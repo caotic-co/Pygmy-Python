@@ -1,0 +1,11 @@
+language: python
+python: 3.8
+
+install:
+  - pip install caos~=2.0
+
+script:
+  - caos init
+  - caos update
+  - caos run tests
+  - caos run build
