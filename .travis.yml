@@ -31,7 +31,6 @@ deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
   file: "dist/pygmypython.zip"
-  draft: true
   on:
     branch: master
     tags: false
