@@ -3,3 +3,9 @@
 
 ### VisualStudioCode ###
 .vscode
+
+### Virtual Environment ###
+venv
+
+### Generated Binaries ###
+dist
