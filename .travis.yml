@@ -8,6 +8,10 @@ addons:
       - chrpath
 
 
+branches:
+  except:
+  - /^v.*$/
+
 install:
   - pip install caos~=2.0
 
@@ -25,8 +29,8 @@ before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - export GIT_TAG="v$(python -c 'from pygmypython_core import __version__; print(__version__)')" && echo "Tag '$GIT_TAG'"
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
-  - (git push --delete https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git $GIT_TAG) || echo "Pushing new Tag"
-  - git push -q https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git --tags
+  # (git push --delete https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git $GIT_TAG) || echo "Pushing new Tag"
+  # git push -q https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git --tags
 
 deploy:
   skip_cleanup: true
