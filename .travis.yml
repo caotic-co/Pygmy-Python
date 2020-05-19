@@ -23,7 +23,7 @@ script:
 before_deploy:
   - git config --local user.name "Travis CI"
   - git config --local user.email "builds@travis-ci.com"
-  - export RELEASE_TAG=$(python3 -c 'from pygmypython_core import __version__; print("v{}".format(__version__))')
+  - export RELEASE_TAG=$(python -c 'from pygmypython_core import __version__; print("v{}".format(__version__))')
   - git tag RELEASE_TAG
 
 deploy:
