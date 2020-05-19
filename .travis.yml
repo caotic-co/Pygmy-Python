@@ -1,4 +1,3 @@
-dist: bionic
 language: python
 python: 3.8
 
@@ -11,7 +10,19 @@ install:
   - pip install caos~=2.0
 
 script:
-  - caos init && ln -s $(which pip) venv/bin/pip
+  - caos init
+  - ln -s $(which pip) venv/bin/pip # This is a hack for Travis CI that adds the missing pip binary
   - caos update
   - caos run tests
   - caos run build
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  file: "dist/*"
+  skip_cleanup: true
+  draft: true
+  overwrite: true
+  on:
+    tags: true
+
