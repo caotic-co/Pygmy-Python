@@ -5,7 +5,8 @@ install:
   - pip install caos~=2.0
 
 script:
-  - python -m venv venv --system-site-packages
+  - python -m venv venv
+  - ln -s $(which pip) venv/bin/pip
   - caos init
   - caos update
   - caos run tests
