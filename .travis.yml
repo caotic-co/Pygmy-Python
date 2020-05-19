@@ -19,10 +19,8 @@ script:
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: "dist/*"
+  file: "dist/**/*"
   skip_cleanup: true
-  draft: true
-  overwrite: true
   on:
     tags: true
 
