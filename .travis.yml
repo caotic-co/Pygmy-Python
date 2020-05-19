@@ -22,7 +22,7 @@ script:
 before_deploy:
   - git config --global user.name "Travis CI"
   - git config --global user.email "builds@travis-ci.com"
-  - cd .. && export GIT_TAG="v$(python -c 'from pygmypython_core import __version__; print(__version__)')"
+  - export GIT_TAG="v$(python -c 'from pygmypython_core import __version__; print(__version__)')" && echo "Tag '$GIT_TAG'"
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
   - git push -q https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git --tags
 
