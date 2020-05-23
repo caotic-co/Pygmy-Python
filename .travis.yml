@@ -22,7 +22,8 @@ script:
   - caos update
   - caos run tests
   - caos run build
-  - echo "Creating 'pygmypython.zip'..." && ((zip -r dist/pygmypython.zip dist/pygmypython) || echo "ERROR. Could not create zip file")
+  - export PYGMYPYTHON_ZIP="pygmypython-v$(python -c 'from pygmypython_core import __version__; print(__version__)').zip"
+  - echo "Creating '$PYGMYPYTHON_ZIP'..." && ((zip -r dist/$PYGMYPYTHON_ZIP dist/pygmypython) || echo "ERROR. Could not create zip file")
 
 
 before_deploy:
@@ -36,7 +37,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: dist/pygmypython.zip
+  file: dist/pygmypython-v*.zip
   skip_cleanup: true
   overwrite: true
   on:
