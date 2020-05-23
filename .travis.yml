@@ -24,6 +24,7 @@ script:
   - caos run build
   - export PYGMYPYTHON_VERSION="v$(python -c 'from pygmypython_core import __version__; print(__version__)')"
   - export PYGMYPYTHON_ZIP="pygmypython-$PYGMYPYTHON_VERSION.zip"
+  - chmod +x dist/pygmypython/pygmypython
   - mv dist/pygmypython dist/pygmypython-$PYGMYPYTHON_VERSION
   - echo "Creating '$PYGMYPYTHON_ZIP'..." && (cd dist && (zip -r $PYGMYPYTHON_ZIP pygmypython-$PYGMYPYTHON_VERSION) || echo "ERROR. Could not create zip file")
 
