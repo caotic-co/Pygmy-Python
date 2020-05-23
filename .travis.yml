@@ -22,7 +22,7 @@ script:
   - caos update
   - caos run tests
   - caos run build
-  - zip -r pygmypython.zip dist/pygmypython
+  - echo "Creating pygmypython.zip" && ((zip -r dist/pygmypython.zip dist/pygmypython) || echo "Could not create zip file")
 
 
 before_deploy:
