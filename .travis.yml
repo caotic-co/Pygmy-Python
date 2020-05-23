@@ -36,7 +36,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: dist/pygmypython
+  file: dist/pygmypython/pygmypython
   skip_cleanup: true
   overwrite: true
   on:
