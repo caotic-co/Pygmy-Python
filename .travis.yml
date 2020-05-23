@@ -22,6 +22,7 @@ script:
   - caos update
   - caos run tests
   - caos run build
+  - zip -r pygmypython.zip dist/pygmypython
 
 
 before_deploy:
@@ -31,12 +32,11 @@ before_deploy:
   - ((git tag -d $GIT_TAG) && echo "Local Tag Deleted") || echo "Nothing to do"
   - ((git push --delete https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git $GIT_TAG) && echo "Remote Tag Deleted") || echo "Nothing to do"
   -  git tag $GIT_TAG -a -m "Generated tag '$GIT_TAG' from TravisCI for build $TRAVIS_BUILD_NUMBER"
-  # git push -q https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git --tags
 
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: dist/pygmypython/pygmypython
+  file: dist/pygmypython/pygmypython.zip
   skip_cleanup: true
   overwrite: true
   on:
