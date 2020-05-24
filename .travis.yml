@@ -31,7 +31,6 @@ before_script:
   - (java -version 2>&1) | grep -q 'openjdk version "14.0.1"'
 
 script:
-  - java -version
   - caos init
   - ln -s $(which pip) venv/bin/pip # This is a hack for Travis CI that adds the missing pip binary
   - caos update
@@ -40,7 +39,9 @@ script:
   - export PYGMYPYTHON_VERSION="v$(python -c 'from pygmypython_core import __version__; print(__version__)')"
   - export PYGMYPYTHON_ZIP="pygmypython-$PYGMYPYTHON_VERSION.zip"
   - mv dist/pygmypython dist/pygmypython-$PYGMYPYTHON_VERSION
-  - echo "Creating '$PYGMYPYTHON_ZIP'..." && (zip -qr dist/$PYGMYPYTHON_ZIP dist/pygmypython-$PYGMYPYTHON_VERSION) || (echo "ERROR. Could not create zip file" && exit 1))
+  - ( echo "Creating '$PYGMYPYTHON_ZIP'..."
+      && zip -qr dist/$PYGMYPYTHON_ZIP dist/pygmypython-$PYGMYPYTHON_VERSION
+    ) || (echo "ERROR. Could not create zip file" && exit 1)
 
 
 before_deploy:
