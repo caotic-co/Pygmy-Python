@@ -8,7 +8,6 @@ addons:
       - chrpath
       - wget
 
-
 branches:
   except:
   - /^v.*$/
@@ -39,10 +38,11 @@ script:
   - export PYGMYPYTHON_VERSION="v$(python -c 'from src.python.pygmypython_core import __version__; print(__version__)')"
   - export PYGMYPYTHON_ZIP="pygmypython-$PYGMYPYTHON_VERSION.zip"
   - mv dist/pygmypython dist/pygmypython-$PYGMYPYTHON_VERSION
+  # Entering into the dist folder is required so that the generated zip does not add the dist folder
   - ( echo "Creating '$PYGMYPYTHON_ZIP'..."
-      && zip -qr dist/$PYGMYPYTHON_ZIP dist/pygmypython-$PYGMYPYTHON_VERSION
+      && cd dist
+      && zip -qr $PYGMYPYTHON_ZIP pygmypython-$PYGMYPYTHON_VERSION
     ) || (echo "ERROR. Could not create zip file" && exit 1)
-
 
 before_deploy:
   - git config --global user.name "Travis CI"
