@@ -36,7 +36,7 @@ script:
   - caos update
   - caos run tests
   - caos run build
-  - export PYGMYPYTHON_VERSION="v$(python -c 'from pygmypython_core import __version__; print(__version__)')"
+  - export PYGMYPYTHON_VERSION="v$(python -c 'from src.python.pygmypython_core import __version__; print(__version__)')"
   - export PYGMYPYTHON_ZIP="pygmypython-$PYGMYPYTHON_VERSION.zip"
   - mv dist/pygmypython dist/pygmypython-$PYGMYPYTHON_VERSION
   - ( echo "Creating '$PYGMYPYTHON_ZIP'..."
@@ -47,7 +47,7 @@ script:
 before_deploy:
   - git config --global user.name "Travis CI"
   - git config --global user.email "builds@travis-ci.com"
-  - export PYGMYPYTHON_VERSION="v$(python -c 'from pygmypython_core import __version__; print(__version__)')" && echo "Tag '$PYGMYPYTHON_VERSION'"
+  - export PYGMYPYTHON_VERSION="v$(python -c 'from src.python.pygmypython_core import __version__; print(__version__)')" && echo "Tag '$PYGMYPYTHON_VERSION'"
   - ((git tag -d $PYGMYPYTHON_VERSION) && echo "Local Tag Deleted") || echo "Nothing to do"
   - ((git push --delete https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git $PYGMYPYTHON_VERSION) && echo "Remote Tag Deleted") || echo "Nothing to do"
   -  git tag $PYGMYPYTHON_VERSION -a -m "Generated tag '$PYGMYPYTHON_VERSION' from TravisCI for build $TRAVIS_BUILD_NUMBER"
