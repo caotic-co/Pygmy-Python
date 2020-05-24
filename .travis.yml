@@ -23,15 +23,13 @@ install:
       && tar -xzf jdk/openjdk-14.0.1_linux-x64_bin.tar.gz --directory jdk
       && echo "Setting JAVA_HOME..."
       && export JAVA_HOME="$(pwd)/jdk/jdk-14.0.1"
+      && export PATH=$JAVA_HOME/bin:$PATH
+      && java -version
       && echo "OpenJDK Installed"
     ) || (echo "ERROR. Could not Install the OpenJDK"; exit 1)
 
-
-before_script:
-  - export PATH=$PATH:$JAVA_HOME/bin
-  - java -version
-
 script:
+  - java -version
   - caos init
   - ln -s $(which pip) venv/bin/pip # This is a hack for Travis CI that adds the missing pip binary
   - caos update
