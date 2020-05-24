@@ -28,7 +28,7 @@ before_script:
   # Check that the right version of the JDK is going to be used
   - export JAVA_HOME="$(pwd)/jdk/jdk-14.0.1"
   - export PATH=$JAVA_HOME/bin:$PATH
-  - (java -version) | grep -q 'openjdk version "14.0.1"'
+  - (java -version 2>&1) | grep -q 'openjdk version "14.0.1"'
 
 script:
   - java -version
