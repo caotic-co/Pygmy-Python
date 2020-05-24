@@ -24,7 +24,7 @@ install:
       && echo "Setting JAVA_HOME..."
       && export JAVA_HOME="$(pwd)/jdk/jdk-14.0.1"
       && echo "OpenJDK Installed"
-    ) || echo "ERROR. Could not Install the OpenJDK"; exit 1
+    ) || (echo "ERROR. Could not Install the OpenJDK"; exit 1)
 
 
 before_script:
@@ -40,7 +40,7 @@ script:
   - export PYGMYPYTHON_VERSION="v$(python -c 'from pygmypython_core import __version__; print(__version__)')"
   - export PYGMYPYTHON_ZIP="pygmypython-$PYGMYPYTHON_VERSION.zip"
   - mv dist/pygmypython dist/pygmypython-$PYGMYPYTHON_VERSION
-  - echo "Creating '$PYGMYPYTHON_ZIP'..." && (zip -qr dist/$PYGMYPYTHON_ZIP dist/pygmypython-$PYGMYPYTHON_VERSION) || echo "ERROR. Could not create zip file"; exit 1)
+  - echo "Creating '$PYGMYPYTHON_ZIP'..." && (zip -qr dist/$PYGMYPYTHON_ZIP dist/pygmypython-$PYGMYPYTHON_VERSION) || (echo "ERROR. Could not create zip file"; exit 1))
 
 
 before_deploy:
