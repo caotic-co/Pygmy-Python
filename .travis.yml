@@ -23,12 +23,13 @@ install:
       && tar -xzf jdk/openjdk-14.0.1_linux-x64_bin.tar.gz --directory jdk
       && echo "Setting JAVA_HOME..."
       && export JAVA_HOME="$(pwd)/jdk/jdk-14.0.1"
-      && echo "Setting PATH..."
-      && export PATH="$PATH:$JAVA_HOME/bin"
       && echo "OpenJDK Installed"
     ) || echo "ERROR. Could not Install the OpenJDK"; exit 1
-  - java -version
 
+
+before_script:
+  - export PATH=$PATH:$JAVA_HOME/bin
+  - java -version
 
 script:
   - caos init
