@@ -12,3 +12,9 @@ dist
 
 ### Python ###
 */__pycache__
+
+### JDK
+jdk
+
+### TMP
+tmp
