@@ -1,4 +1,4 @@
-from pygmypython_core import __version__
+from src.python.pygmypython_core import __version__
 from typing import List
 
 

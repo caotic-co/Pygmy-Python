@@ -12,6 +12,7 @@ tasks:
     - "((test -d pygmypython.build) && (rm -Rf pygmypython.build)) || exit 0"
     - "mkdir dist"
     - "mv pygmypython.dist dist/pygmypython"
+    - "chmod +x dist/pygmypython/pygmypython"
     - "echo 'PygmyPython:SUCCESS: Binary created'"
 
   tests:

@@ -6,6 +6,7 @@ addons:
   apt:
     packages:
       - chrpath
+      - wget
 
 
 branches:
@@ -17,6 +18,13 @@ install:
 
 
 script:
+  - echo "Installing OpenJDK 14..." && \
+    ((wget https://download.java.net/java/GA/jdk14.0.1/664493ef4a6946b186ff29eb326336a2/7/GPL/openjdk-14.0.1_linux-x64_bin.tar.gz \
+    && tar xvzf openjdk-14.0.1_linux-x64_bin.tar.gz \
+    && export JAVA_HOME="$(pwd)/jdk-14.0.1" \
+    && export PATH=$JAVA_HOME;$PATH) \
+    || echo "ERROR. Could not Install the OpenJDK)"
+  - java -version
   - caos init
   - ln -s $(which pip) venv/bin/pip # This is a hack for Travis CI that adds the missing pip binary
   - caos update
@@ -24,7 +32,6 @@ script:
   - caos run build
   - export PYGMYPYTHON_VERSION="v$(python -c 'from pygmypython_core import __version__; print(__version__)')"
   - export PYGMYPYTHON_ZIP="pygmypython-$PYGMYPYTHON_VERSION.zip"
-  - chmod +x dist/pygmypython/pygmypython
   - mv dist/pygmypython dist/pygmypython-$PYGMYPYTHON_VERSION
   - echo "Creating '$PYGMYPYTHON_ZIP'..." && (cd dist && (zip -r $PYGMYPYTHON_ZIP pygmypython-$PYGMYPYTHON_VERSION) || echo "ERROR. Could not create zip file")
 
