@@ -4,7 +4,7 @@
 * An x86_64 Linux Environment
 * A JVM installed and available in the path of the System
 * Python 3.8
-* The 'Caos' Dependencies Manager for Python
+* The 'caos' Dependencies Manager for Python
 
 
 ## Create the virtual environment for the project
