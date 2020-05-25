@@ -10,10 +10,14 @@ tasks:
     - mkdir -p dist/pygmypython
     - (test -d dist/pygmypython/openjdk) ||
       (
-        echo "PygmyPython->INFO. Extracting OpenJDK..."
-        && tar -xzf vendor/openjdk/openjdk-14.0.1_linux-x64_bin.tar.gz --directory dist/pygmypython
+        mkdir -p tmp
+        && echo "PygmyPython->INFO. Downloading OpenJDK..."
+        && wget -q -P tmp https://download.java.net/java/GA/jdk14.0.1/664493ef4a6946b186ff29eb326336a2/7/GPL/openjdk-14.0.1_linux-x64_bin.tar.gz
+        && echo "PygmyPython->INFO. Extracting OpenJDK..."
+        && tar -xzf tmp/openjdk-14.0.1_linux-x64_bin.tar.gz --directory dist/pygmypython
         && mv dist/pygmypython/jdk-14.0.1 dist/pygmypython/openjdk
         && cp vendor/openjdk/LICENSE dist/pygmypython/openjdk/LICENSE
+        && cp vendor/openjdk/README dist/pygmypython/openjdk/README
       )
     - echo "PygmyPython->INFO. OpenJDK Installed"
 
