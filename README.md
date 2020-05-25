@@ -1,5 +1,5 @@
 # Pygmy Python
-An **x86_64 Linux Compiler** for a **new** reduced typed version of Python that generates bytecode that runs on a JVM.
+Pygmy Python is an **x86_64 Linux Compiler** for a **new** reduced typed version of Python that generates bytecode that runs on a JVM.
 
 ## Installation
 Go to the [Releases](https://github.com/caotic-co/Pygmy-Python/releases) available in the repo,
