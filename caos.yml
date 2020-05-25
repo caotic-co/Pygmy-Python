@@ -11,9 +11,9 @@ tasks:
     - (test -d dist/pygmypython/openjdk) ||
       (
         echo "PygmyPython->INFO. Extracting OpenJDK..."
-        && tar -xzf vendor/openjdk14/openjdk-14.0.1_linux-x64_bin.tar.gz --directory dist/pygmypython
+        && tar -xzf vendor/openjdk/openjdk-14.0.1_linux-x64_bin.tar.gz --directory dist/pygmypython
         && mv dist/pygmypython/jdk-14.0.1 dist/pygmypython/openjdk
-        && cp vendor/openjdk14/LICENSE dist/pygmypython/openjdk/LICENSE
+        && cp vendor/openjdk/LICENSE dist/pygmypython/openjdk/LICENSE
       )
     - echo "PygmyPython->INFO. OpenJDK Installed"
 
