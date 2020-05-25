@@ -1,6 +1,6 @@
 from sys import argv
-from src.python.pygmypython_core.entry_point import main
+from src.python.pygmypython.entry_point import main, ReturnCode
 
 
 if __name__ == "__main__":
-    main(argv)
+    exit(main(argv))

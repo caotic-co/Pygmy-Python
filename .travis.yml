@@ -6,7 +6,6 @@ addons:
   apt:
     packages:
       - chrpath
-      - wget
 
 branches:
   except:
@@ -14,28 +13,13 @@ branches:
 
 install:
   - pip install caos~=2.0
-  - ( echo "Installing OpenJDK 14..."
-      && mkdir jdk
-      && echo "Downloading..."
-      && wget -q -P jdk https://download.java.net/java/GA/jdk14.0.1/664493ef4a6946b186ff29eb326336a2/7/GPL/openjdk-14.0.1_linux-x64_bin.tar.gz
-      && echo "Extracting..."
-      && tar -xzf jdk/openjdk-14.0.1_linux-x64_bin.tar.gz --directory jdk
-      && echo "OpenJDK Installed"
-    ) || (echo "ERROR. Could not Install the OpenJDK" && exit 1)
-
-before_script:
-  # Check that the right version of the JDK is going to be used
-  - export JAVA_HOME="$(pwd)/jdk/jdk-14.0.1"
-  - export PATH=$JAVA_HOME/bin:$PATH
-  - (java -version 2>&1) | grep -q 'openjdk version "14.0.1"'
 
 script:
   - caos init
   - ln -s $(which pip) venv/bin/pip # This is a hack for Travis CI that adds the missing pip binary
   - caos update
-  - caos run tests
   - caos run build
-  - export PYGMYPYTHON_VERSION="v$(python -c 'from src.python.pygmypython_core import __version__; print(__version__)')"
+  - export PYGMYPYTHON_VERSION="v$(python -c 'from src.python.pygmypython import __version__; print(__version__)')"
   - export PYGMYPYTHON_ZIP="pygmypython-$PYGMYPYTHON_VERSION.zip"
   - mv dist/pygmypython dist/pygmypython-$PYGMYPYTHON_VERSION
   # Entering into the dist folder is required so that the generated zip does not add the dist folder
@@ -47,7 +31,7 @@ script:
 before_deploy:
   - git config --global user.name "Travis CI"
   - git config --global user.email "builds@travis-ci.com"
-  - export PYGMYPYTHON_VERSION="v$(python -c 'from src.python.pygmypython_core import __version__; print(__version__)')" && echo "Tag '$PYGMYPYTHON_VERSION'"
+  - export PYGMYPYTHON_VERSION="v$(python -c 'from src.python.pygmypython import __version__; print(__version__)')" && echo "Tag '$PYGMYPYTHON_VERSION'"
   - ((git tag -d $PYGMYPYTHON_VERSION) && echo "Local Tag Deleted") || echo "Nothing to do"
   - ((git push --delete https://$GITHUB_OAUTH_TOKEN@github.com/caotic-co/Pygmy-Python.git $PYGMYPYTHON_VERSION) && echo "Remote Tag Deleted") || echo "Nothing to do"
   -  git tag $PYGMYPYTHON_VERSION -a -m "Generated tag '$PYGMYPYTHON_VERSION' from TravisCI for build $TRAVIS_BUILD_NUMBER"

@@ -1,5 +1,6 @@
-### PyCharm ###
-.idea
+### Jetbrains ###
+**/.idea
+**/java/**/out
 
 ### VisualStudioCode ###
 .vscode
@@ -11,7 +12,7 @@ venv
 dist
 
 ### Python ###
-*/__pycache__
+**/__pycache__
 
 ### JDK
 jdk
