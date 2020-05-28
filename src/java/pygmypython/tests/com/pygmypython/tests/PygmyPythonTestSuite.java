@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         // PygmyPython Stdlib
-        PigmyPythonObjectTest.class,
+        PygmyPythonObjectTest.class,
 })
 public class PygmyPythonTestSuite { }
