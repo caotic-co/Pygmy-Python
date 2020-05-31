@@ -40,7 +40,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: dist/pygmypython-$PYGMYPYTHON_VERSION.zip
+  file: dist/pygmypython-$PYGMYPYTHON_VERSION-x86_64-linux.zip
   skip_cleanup: true
   overwrite: true
   on:
