@@ -4,48 +4,33 @@ dependencies:
   nuitka: "~0.6.8"
 
 tasks:
+  tests:
+    - echo "PygmyPython->INFO. Executing Python Unit Tests..."
+    - caos python -m unittest discover -v src/python/tests
 
-  install_openjdk:
-    - echo "PygmyPython->INFO. Checking OpenJDK installation..."
-    - mkdir -p dist/pygmypython
-    - (test -d dist/pygmypython/openjdk) ||
-      (
-        mkdir -p tmp
-        && echo "PygmyPython->INFO. Downloading OpenJDK..."
-        && wget -q -P tmp https://download.java.net/java/GA/jdk14.0.1/664493ef4a6946b186ff29eb326336a2/7/GPL/openjdk-14.0.1_linux-x64_bin.tar.gz
-        && echo "PygmyPython->INFO. Extracting OpenJDK..."
-        && tar -xzf tmp/openjdk-14.0.1_linux-x64_bin.tar.gz --directory dist/pygmypython
-        && mv dist/pygmypython/jdk-14.0.1 dist/pygmypython/openjdk
-        && cp vendor/openjdk/LICENSE dist/pygmypython/openjdk/LICENSE
-        && cp vendor/openjdk/README dist/pygmypython/openjdk/README
-      )
-    - echo "PygmyPython->INFO. OpenJDK Installed"
-
-  java_build:
+  java_build_linux:
+    - (which java > /dev/null 2>&1) || (echo "'java' is not available in the system path" && exit 1)
+    - (which javac > /dev/null 2>&1) || (echo "'javac' is not available in the system path" && exit 1)
     - mkdir -p dist/pygmypython/pygmypython_classes
-    - ( export OPEN_JDK=dist/pygmypython/openjdk
-        && echo "PygmyPython->INFO. Compiling PygmyPython Java Classes..."
+    - (
+        echo "PygmyPython->INFO. Compiling PygmyPython Java Classes..."
         && export JUNIT_LIB="src/java/pygmypython/vendor/junit/junit-4.13.jar"
         && export HAMCREST_LIB="src/java/pygmypython/vendor/hamcrest/hamcrest-core-1.3.jar"
         && (
-          $OPEN_JDK/bin/javac -cp $JUNIT_LIB:$HAMCREST_LIB -d dist/pygmypython/pygmypython_classes $(find src/java/pygmypython/ -name "*.java")
+          javac -cp $JUNIT_LIB:$HAMCREST_LIB -d dist/pygmypython/pygmypython_classes $(find src/java/pygmypython/ -name "*.java")
           || (echo "PygmyPython->ERROR. Compilation Failed" && exit 1)
         )
         && echo "PygmyPython->SUCCESS. Compilation Finished"
         && echo "PygmyPython->INFO. Executing Junit Test Suite..."
         && (
-          $OPEN_JDK/bin/java -cp $JUNIT_LIB:$HAMCREST_LIB:dist/pygmypython/pygmypython_classes com.pygmypython.tests.PygmyPythonTestSuiteRunner
+          java -cp $JUNIT_LIB:$HAMCREST_LIB:dist/pygmypython/pygmypython_classes com.pygmypython.tests.PygmyPythonTestSuiteRunner
           || (echo "PygmyPython->ERROR. Junit Test Suite Failed" && exit 1)
         )
         && echo "PygmyPython->SUCCESS. All tests finished successfully"
         && rm -Rf dist/pygmypython/pygmypython_classes/com/pygmypython/tests
       )
 
-  tests:
-    - echo "PygmyPython->INFO. Executing Python Unit Tests..."
-    - caos python -m unittest discover -v src/python/tests
-
-  python_build:
+  nuitka_build_linux:
     - echo "PygmyPython->INFO. Creating Linux binary..."
     - mkdir -p dist/pygmypython
     - (caos python -m nuitka --output-dir dist --remove-output --standalone --follow-imports pygmypython.py) ||
@@ -55,9 +40,8 @@ tasks:
     - chmod +x dist/pygmypython/pygmypython
     - echo "PygmyPython->SUCCESS. Binary created"
 
-  build:
-    - install_openjdk
-    - java_build
+  build_linux:
+    - java_build_linux
     - caos run tests
-    - python_build
+    - nuitka_build_linux
 

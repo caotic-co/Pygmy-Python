@@ -19,9 +19,9 @@ script:
   - caos init
   - ln -s $(which pip) venv/bin/pip # This is a hack for Travis CI that adds the missing pip binary
   - caos update
-  - caos run build
+  - caos run build_linux
   - export PYGMYPYTHON_VERSION="v$(python -c 'from src.python.pygmypython import __version__; print(__version__)')"
-  - export PYGMYPYTHON_ZIP="pygmypython-$PYGMYPYTHON_VERSION.zip"
+  - export PYGMYPYTHON_ZIP="pygmypython-$PYGMYPYTHON_VERSION-x86_64-linux.zip"
   - mv dist/pygmypython dist/pygmypython-$PYGMYPYTHON_VERSION
   # Entering into the dist folder is required so that the generated zip does not add the dist folder
   - ( echo "Creating '$PYGMYPYTHON_ZIP'..."
